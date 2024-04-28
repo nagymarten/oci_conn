@@ -11,7 +11,7 @@
       }
 
       // Prepare a DELETE statement to remove the book supply with the provided SUPPLY_ID
-      $sql = "DELETE FROM KONYVBESZERZES WHERE SUPPLY_ID = :supplyId";
+      $sql = "DELETE FROM BOOK_SUPPLY WHERE SUPPLY_ID = :supplyId";
       $stmt = oci_parse($conn, $sql);
 
       // Bind the SUPPLY_ID to the statement
@@ -35,7 +35,7 @@
       $host  = $_SERVER['HTTP_HOST'];
       $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
       $extra = 'mypage.php';
-      header("Location: http://$host/oci_conn/konyvbeszerzes/list.php");
+      header("Location: http://$host/oci_conn/book_supply/list.php");
   } else {
       echo "No SUPPLY_ID specified.";
   }

@@ -2,7 +2,7 @@
     include '../header.php'; // Assuming 'header.php' is in the same directory as this file
 
     if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === 'Y') {
-       echo '<button onclick="window.location.pathname=\'oci_conn/konyvbeszerzes/create.php\'">Create New Book Supply</button>';
+       echo '<button onclick="window.location.pathname=\'oci_conn/book_supply/create.php\'">Create New Book Supply</button>';
     }
 ?>
 
@@ -63,7 +63,7 @@
             if (!$conn) {
                 echo "<tr><td colspan='10'>Unable to connect to the database.</td></tr>";
             } else {
-                $query = 'SELECT * FROM KONYVBESZERZES';
+                $query = 'SELECT * FROM BOOK_SUPPLY';
                 if (isset($_GET['search']) && !empty($_GET['search'])) {
                     $query .= ' WHERE BOOK_ISBN LIKE :search';
                 }

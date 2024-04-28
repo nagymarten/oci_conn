@@ -29,7 +29,7 @@
         }
 
         // Fetch the book supply data from the database
-        $sql = "SELECT SUPPLY_ID, BOOK_ISBN, SUPPLYER_NAME, SUPPLY_DATE, QUANTITY, TOTAL_COST FROM KONYVBESZERZES WHERE SUPPLY_ID = :SUPPLY_ID";
+        $sql = "SELECT SUPPLY_ID, BOOK_ISBN, SUPPLYER_NAME, SUPPLY_DATE, QUANTITY, TOTAL_COST FROM BOOK_SUPPLY WHERE SUPPLY_ID = :SUPPLY_ID";
         $stmt = oci_parse($conn, $sql);
         oci_bind_by_name($stmt, ':SUPPLY_ID', $supplyId);
         oci_execute($stmt);

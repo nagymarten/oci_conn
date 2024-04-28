@@ -20,7 +20,7 @@
     include '../connectToDb.php'; // Include your database connection script
 
     if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === 'Y') {
-        echo '<button onclick="window.location.pathname=\'oci_conn/konyvbeszerzes/insertBooksupply.php\'">Create New Book Supply</button>';
+        echo '<button onclick="window.location.pathname=\'oci_conn/book_supply/insertBooksupply.php\'">Create New Book Supply</button>';
     }
     ?>
     //TODO: test parent key is available

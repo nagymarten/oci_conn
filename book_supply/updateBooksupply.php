@@ -17,7 +17,7 @@
       }
 
       // Prepare SQL update statement
-      $sql = "UPDATE KONYVBESZERZES SET BOOK_ISBN = :book_isbn, SUPPLYER_NAME = :supplyer_name, SUPPLY_DATE = TO_DATE(:supply_date, 'YYYY-MM-DD'), QUANTITY = :quantity, TOTAL_COST = :total_cost WHERE SUPPLY_ID = :supply_id";
+      $sql = "UPDATE BOOK_SUPPLY SET BOOK_ISBN = :book_isbn, SUPPLYER_NAME = :supplyer_name, SUPPLY_DATE = TO_DATE(:supply_date, 'YYYY-MM-DD'), QUANTITY = :quantity, TOTAL_COST = :total_cost WHERE SUPPLY_ID = :supply_id";
       $stmt = oci_parse($conn, $sql);
 
       oci_bind_by_name($stmt, ':book_isbn', $bookIsbn);

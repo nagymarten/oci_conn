@@ -11,7 +11,7 @@
       $total_cost = $_POST['total_cost'];
 
       // Prepare SQL insert statement
-      $sql = "INSERT INTO KONYVBESZERZES (BOOK_ISBN, SUPPLYER_NAME, SUPPLY_DATE, QUANTITY, TOTAL_COST) 
+      $sql = "INSERT INTO BOOK_SUPPLY (BOOK_ISBN, SUPPLYER_NAME, SUPPLY_DATE, QUANTITY, TOTAL_COST) 
               VALUES (:book_isbn, :supplyer_name, TO_DATE(:supply_date, 'YYYY-MM-DD'), :quantity, :total_cost)";
       $stmt = oci_parse($conn, $sql);
 
