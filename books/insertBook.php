@@ -1,6 +1,5 @@
 <?php
   include '../connectToDb.php'; // Assumes you have a connection script
-  include '../header.php'; // Assumes you have a header_unathorized.php
 
   $conn = getDbConnection();
 
@@ -39,6 +38,8 @@
 
       if ($result) {
           echo "New book created successfully.";
+          echo "<br>";
+          echo "<button onclick=\"window.location.href = 'list.php';\">List books</button>";   
       } else {
           $e = oci_error($stmt);
           echo "Error: " . $e['message'];
