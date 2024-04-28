@@ -44,7 +44,7 @@
             <form action="updateReview.php?REVIEW_ID=<?php echo htmlspecialchars($reviewId);?>" method="POST">
                 <label for="customer_id">Customer ID:</label>
                 <input type="number" id="customer_id" name="customer_id" value="<?php echo htmlspecialchars($review['CUSTOMER_ID']);?>" required>
-                //TODO: set boundries for score
+                <!-- TODO: set boundries for score -->
                 <label for="review_score">Review Score:</label>
                 <input type="number" id="review_score" name="review_score" value="<?php echo htmlspecialchars($review['REVIEW_SCORE']);?>" required>
 

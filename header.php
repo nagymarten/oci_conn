@@ -1,45 +1,4 @@
-<?php
-    session_start();
-
-    // Check if the token exists in the session
-    if (!isset($_SESSION['token'])) {
-        // Redirect unauthenticated users to the login page
-        $host  = $_SERVER['HTTP_HOST'];
-        $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-        $extra = 'mypage.php';
-        header("Location: http://$host/oci_conn/login.php");
-        exit();
-    }
-
-    // Function to verify token (pseudo-code)
-    function verifyToken($token) {
-        //TODO
-        return true;
-    }
-
-    // Verify the token
-    if (!verifyToken($_SESSION['token'])) {
-        $host  = $_SERVER['HTTP_HOST'];
-        $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-        $extra = 'mypage.php';
-        header("Location: http://$host/oci_conn/login.php");
-        exit();
-    }
-    // Sign out functionality
-    if (isset($_POST['signout'])) {
-        // Unset all session variables
-        session_unset();
-        // Destroy the session
-        session_destroy();
-        // Redirect to login page
-        $host  = $_SERVER['HTTP_HOST'];
-        $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-        $extra = 'mypage.php';
-        header("Location: http://$host/oci_conn/login.php");
-    exit();
-    }
-
-?>
+<?php include 'adminGuard.php'; ?>
 
 
 <!DOCTYPE html>
@@ -55,10 +14,18 @@
     <button onclick="window.location.pathname = 'oci_conn/books/list.php';">Books</button>
     <button onclick="window.location.pathname = 'oci_conn/stores/list.php';">Stores</button>
     <button onclick="window.location.pathname = 'oci_conn/review/list.php';">Revierws </button>
-    <button onclick="window.location.pathname = 'oci_conn/book_supply/list.php';">Book supply </button>
-    <button onclick="window.location.pathname = 'oci_conn/orders/list.php';">Orders </button>
-    <button onclick="window.location.pathname = 'oci_conn/regular_customer/list.php';">Regular Customers </button>
 
+    <?php
+        $isAdmin = isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === 'Y';
+
+        if ( $isAdmin ) {
+            echo "<button onclick=\"window.location.pathname = 'oci_conn/connection.php';\">DB connection check</button>";
+            echo "<button onclick=\"window.location.pathname = 'oci_conn/book_supply/list.php';\">Book supply </button>";
+            echo "<button onclick=\"window.location.pathname = 'oci_conn/orders/list.php';\">Orders </button>";
+            echo "<button onclick=\"window.location.pathname = 'oci_conn/regular_customer/list.php';\">Regular Customers </button>";
+        }
+    ?>
+   
     <form method="post">
         <input type="submit" name="signout" value="Sign Out">
     </form>

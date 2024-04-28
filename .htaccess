@@ -1,0 +1,12 @@
+RewriteEngine On
+RewriteBase /oci_conn/
+
+# Rewrite all requests to the appropriate directory
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^/]+)/?$ $1/ [L]
+
+# Rewrite requests to regular_customer to the appropriate directory
+RewriteRule ^regular_customer/(.*)$ regular_customer/$1 [L]
+
+Options -Indexes

@@ -13,13 +13,13 @@
 
     session_start();
 
-    function generateToken($email) {
+    function generateToken($nickname) {
         $token = base64_encode(random_bytes(32));
         return $token;
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $email = $_POST['email'];
+        $nickname = htmlspecialchars($_POST['nickname']);
         $password = $_POST['password'];
 
         // Connect to the database
@@ -28,29 +28,28 @@
         if (!$conn) {
             echo "<h2>Database connection error.</h2>";
         } else {
-            // Prepare a select statement to check if the email exists and fetch the password
-            $sql = 'SELECT * FROM UGYFELEK WHERE EMAIL = :email';
+            // Prepare a select statement to check if the nickname exists and fetch the password
+            $sql = 'SELECT * FROM UGYFELEK WHERE NICKNAME = :nickname';
             $stid = oci_parse($conn, $sql);
-            oci_bind_by_name($stid, ':email', $email);
+            oci_bind_by_name($stid, ':nickname', $nickname);
             oci_execute($stid);
 
             $row = oci_fetch_array($stid, OCI_ASSOC);
 
             if (!$row) {
-                echo "<h2>Email not registered</h2>";
+                echo "<h2>Nickname not registered</h2>";
             } else {
                 // Verify the password
                 if (password_verify($password, $row['PASSWORD'])) {
-                    $token = generateToken($email);
+                    $token = generateToken($nickname);
                     $_SESSION['token'] = $token;
-                    $_SESSION['email'] = $email;
-                    $_SESSION['nickname'] = $row['NICKNAME'];
+                    $_SESSION['nickname'] = $nickname;
+                    $_SESSION['email'] = $row['EMAIL'];
                     $_SESSION['isAdmin'] = $row['IS_ADMIN'];
                     header("Location: header.php");
-                    
                     exit(); // Ensure no further execution of the script after redirection
                 } else {
-                    echo "<h2>Login Failed: Invalid email or password.</h2>";
+                    echo "<h2>Login Failed: Invalid nickname or password.</h2>";
                 }
             }
         }
@@ -58,12 +57,12 @@
         // Close the Oracle connection
         oci_close($conn);
     }
-    ?>
+  ?>
 
     <h2>Login Form</h2>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br>
+        <label for="nickname">Nickname:</label><br>
+        <input type="text" id="nickname" name="nickname" required><br>
 
         <label for="password">Password:</label><br>
         <input type="password" id="password" name="password" required><br>
