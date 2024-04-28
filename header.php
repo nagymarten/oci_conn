@@ -50,12 +50,13 @@
     <title>Home</title>
 </head>
 <body>
+    <!-- TODO: list volnurable data only for isAdmin  -->
     <h2>Könyvesbolt</h2>
     <button onclick="window.location.pathname = 'oci_conn/books/list.php';">Books</button>
     <button onclick="window.location.pathname = 'oci_conn/stores/list.php';">Stores</button>
     <button onclick="window.location.pathname = 'oci_conn/review/list.php';">Revierws </button>
     <button onclick="window.location.pathname = 'oci_conn/book_supply/list.php';">Book supply </button>
-
+    <button onclick="window.location.pathname = 'oci_conn/orders/list.php';">Orders </button>
 
     <form method="post">
         <input type="submit" name="signout" value="Sign Out">

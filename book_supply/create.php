@@ -38,7 +38,7 @@
         <input type="number" id="quantity" name="quantity" required>
 
         <label for="total_cost">Total Cost:</label>
-        <input type="number" id="total_cost" name="total_cost" step="0.01" required>
+        <input type="number" id="total_cost" name="total_cost" required>
 
         <button type="submit">Create Book Supply</button>
     </form>
