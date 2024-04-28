@@ -25,6 +25,7 @@
         <!-- TODO: check customer id is legit -->
         <label for="customer_id">Customer ID:</label>
         <input type="text" id="customer_id" name="customer_id" required>
+        <!-- TODO: check book id is legit -->
 
         <label for="book_isbn">Book ISBN:</label>
         <input type="text" id="book_isbn" name="book_isbn" required>
