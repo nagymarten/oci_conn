@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create New Book</title>
+    <title>Edit Book</title>
     <style>
         label, input, select {
             display: block;
@@ -14,41 +14,71 @@
         }
     </style>
 </head>
-<?php include 'insertBook.php' ?>
 <body>
     <h1>Edit Book</h1>
-    <form action="insertBook.php" method="POST">
-        <label for="isbn">ISBN:</label>
-        <input type="text" id="isbn" name="isbn" required>
+    <?php
+    include '../connectToDb.php'; // Include your database connection script
 
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required>
+    if (isset($_GET['ISBN']) && !empty($_GET['ISBN'])) {
+        $bookId = $_GET['ISBN'];
+        $conn = getDbConnection();
 
-        <label for="author">Author:</label>
-        <input type="text" id="author" name="author" required>
+        if (!$conn) {
+            echo "Unable to connect to database.";
+            exit;
+        }
 
-        <label for="price">Price:</label>
-        <input type="number" id="price" name="price" step="0.01" required>
+        // Fetch the book data from the database
+        $sql = "SELECT ISBN, TITLE, AUTHOR, PRICE, GENRE, BOOK_BINDING, PAGE_COUNT, PUBLISHER, PAGE_SIZE, PUBLISHER_DATE FROM KONYVEK WHERE ISBN = :ISBN";
+        $stmt = oci_parse($conn, $sql);
+        oci_bind_by_name($stmt, ':ISBN', $bookId);
+        oci_execute($stmt);
+        $book = oci_fetch_array($stmt, OCI_ASSOC);
 
-        <label for="genre">Genre:</label>
-        <input type="text" id="genre" name="genre" required>
+        if (!$book) {
+            echo "Elem not found.";
+            exit;
+        } else {
+            // Display the form with values filled in
+            ?>
+            <form action="updateBook.php?ISBN=<?php echo htmlspecialchars($bookId); ?>" method="POST">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" value="<?php echo htmlspecialchars($book['TITLE']); ?>" required>
 
-        <label for="binding">Binding:</label>
-        <input type="text" id="binding" name="binding" required>
+                <label for="author">Author:</label>
+                <input type="text" id="author" name="author" value="<?php echo htmlspecialchars($book['AUTHOR']); ?>" required>
 
-        <label for="page_count">Page Count:</label>
-        <input type="number" id="page_count" name="page_count" required>
+                <label for="price">Price:</label>
+                <input type="number" id="price" name="price" value="<?php echo htmlspecialchars($book['PRICE']); ?>" step="0.01" required>
 
-        <label for="publisher">Publisher:</label>
-        <input type="text" id="publisher" name="publisher" required>
+                <label for="genre">Genre:</label>
+                <input type="text" id="genre" name="genre" value="<?php echo htmlspecialchars($book['GENRE']); ?>" required>
 
-        <label for="size">Size:</label>
-        <input type="text" id="size" name="size" required>
+                <label for="bookBinding">Binding:</label>
+                <input type="text" id="bookBinding" name="bookBinding" value="<?php echo htmlspecialchars($book['BOOK_BINDING']); ?>" required>
 
-        <label for="publisher_date">Publish Date:</label>
-        <input type="date" id="publisher_date" name="publisher_date" required>
+                <label for="page_count">Page Count:</label>
+                <input type="number" id="page_count" name="page_count" value="<?php echo htmlspecialchars($book['PAGE_COUNT']); ?>" required>
 
-        <button type="submit">Create Book</button>
-    </form>
+                <label for="publisher">Publisher:</label>
+                <input type="text" id="publisher" name="publisher" value="<?php echo htmlspecialchars($book['PUBLISHER']); ?>" required>
+
+                <label for="pageSize">Size:</label>
+                <input type="text" id="pageSize" name="pageSize" value="<?php echo htmlspecialchars($book['PAGE_SIZE']); ?>" required>
+
+               <label for="publisher_date">Publish Date: (currrent <?php echo $book['PUBLISHER_DATE'] ?>)</label>
+               <input type="date" id="publisher_date" name="publisher_date" value="<?php echo date('d-m-y', strtotime($book['PUBLISHER_DATE'])); ?>" required>
+
+
+                <button type="submit">Update Book</button>
+            </form>
+            <?php
+        }
+        oci_free_statement($stmt);
+        oci_close($conn);
+    } else {
+        echo "No book ID specified.";
+    }
+    ?>
 </body>
 </html>

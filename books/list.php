@@ -77,7 +77,7 @@
                         echo "<td>" . ($item !== null ? htmlspecialchars($item, ENT_QUOTES) : "&nbsp;") . "</td>";
                     };
                     if ($isAdmin) {
-                        echo "<td><button onclick='window.location.pathname=\"oci_conn/books/edit.php\"'>EDIT</button></td>";
+                        echo "<td><button onclick=\"window.location.href='edit.php?ISBN=" . urlencode($row['ISBN']) . "'\"'>EDIT</button></td>";
                         echo "<td><button onclick=\"window.location.href='delete.php?ISBN=" . urlencode($row['ISBN']) . "'\">DELETE</button></td>";
                     };
                     echo "</tr>";
