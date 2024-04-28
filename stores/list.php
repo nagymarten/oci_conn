@@ -30,7 +30,7 @@
     </style>
 </head>
 <body>
-    <h2>List of Books</h2>
+    <h2>List of Stores</h2>
     <table>
         <?php
             include '../connectToDb.php';
