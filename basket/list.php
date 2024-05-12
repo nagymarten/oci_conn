@@ -1,7 +1,7 @@
 <?php
     include '../header.php'; // Assuming 'header.php' is in the same directory as this file
 
-    print_r($_SESSION); // Debug: Print all session data
+    //print_r($_SESSION); // Debug: Print all session data
 
     // Handle delete request
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_isbn'])) {
@@ -82,7 +82,7 @@
                     echo "<td>$" . htmlspecialchars($bookDetails['price']) . "</td>";
                     // Add Delete button
                     echo "<td>
-                            <form method='post'>
+                            <form action='delete_from_basket.php' method='post'>
                                 <input type='hidden' name='delete_isbn' value='" . htmlspecialchars($bookDetails['ISBN']) . "'>
                                 <button type='submit' class='btn-delete'>Delete</button>
                             </form>
