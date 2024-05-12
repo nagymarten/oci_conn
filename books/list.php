@@ -42,7 +42,6 @@
                 <input type='submit' value='Search'>
             </form>";
 
-
             $isAdmin = isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === 'Y';
 
             echo '<tr>
@@ -82,7 +81,13 @@
                         echo "<td><button onclick=\"window.location.href='edit.php?ISBN=" . urlencode($row['ISBN']) . "'\"'>EDIT</button></td>";
                         echo "<td><button onclick=\"window.location.href='delete.php?ISBN=" . urlencode($row['ISBN']) . "'\">DELETE</button></td>";
                     } else {
-                        echo "<td><button onclick=\"window.location.href='add_to_basket.php?ISBN=" . urlencode($row['ISBN']) . "'\">Add to Basket</button></td>"; // Add button for "Add to Basket"
+                       echo "
+                       <td>
+                            <form action='add_to_basket.php' method='post'>
+                                <input type='hidden' name='ISBN' value='" . htmlspecialchars($row['ISBN']) . "'>
+                                <button type='submit'>Add to Basket</button>
+                            </form>
+                        </td>";
                     }
                     echo "</tr>";
                 }

@@ -13,7 +13,7 @@
 
     session_start();
 
-    function generate($nickname) {
+    function generateToken($nickname) {
         $token = base64_encode(random_bytes(32));
         return $token;
     }
@@ -46,6 +46,7 @@
                     $_SESSION['nickname'] = $nickname;
                     $_SESSION['email'] = $row['EMAIL'];
                     $_SESSION['isAdmin'] = $row['IS_ADMIN'];
+                    $_SESSION['basket'] = array();
                     header("Location: header.php");
                     exit(); // Ensure no further execution of the script after redirection
                 } else {

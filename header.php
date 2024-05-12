@@ -25,7 +25,7 @@
             echo "<button onclick=\"window.location.pathname = 'oci_conn/regular_customer/list.php';\">Regular Customers </button>";
         }
         else{
-            echo "<button onclick=\"window.location.pathname = 'oci_conn/basket/basket.php';\">Basket</button>";
+            echo "<button onclick=\"window.location.pathname = 'oci_conn/basket/list.php';\">Basket</button>";
         }
     ?>
    
