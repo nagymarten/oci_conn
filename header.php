@@ -7,10 +7,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <link rel="stylesheet" href="mystyle.css">
 </head>
 <body>
     <!-- TODO: list volnurable data only for isAdmin  -->
-    <h2>Könyvesbolt</h2>
+    <h2>The book store</h2>
     <button onclick="window.location.pathname = 'oci_conn/books/list.php';">Books</button>
     <button onclick="window.location.pathname = 'oci_conn/stores/list.php';">Stores</button>
     <button onclick="window.location.pathname = 'oci_conn/review/list.php';">Revierws </button>

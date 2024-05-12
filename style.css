@@ -1,0 +1,128 @@
+/* Layout */
+body {
+  min-height: 100vh;
+  min-width: 100vw;
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  background-color: rgb(10, 10, 10);
+  color: #ddd;
+}
+
+main {
+  padding: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% - 2rem);
+  height: auto;
+  min-height: calc(100vh - 160px);
+}
+
+main h1 {
+  font-size: 1.5rem;
+}
+
+/* Header */
+header {
+  background-color: rgba(10, 10, 10, .2);
+  padding: 0.5rem 1rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, .2);
+  height: 80px;
+  backdrop-filter: blur(1rem);
+}
+
+header h2 {
+  text-transform: uppercase;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Global */
+button {
+  background: unset;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(221, 221, 221, .2);
+  color: #ddd;
+  font-size: 16px;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  background-color: rgba(221, 221, 221, 0);
+  transition: .3s;
+}
+button:hover {
+  background-color: rgba(221, 221, 221, .2);
+}
+button.primary {
+  background-color: rgba(221, 221, 221, .8);
+  border-color: rgba(221, 221, 221, .8);
+  color: rgb(10, 10, 10);
+}
+
+input {
+  background: unset;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(221, 221, 221, .2);
+  color: #ddd;
+  font-size: 16px;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  background-color: rgba(221, 221, 221, 0);
+  transition: .3s;
+}
+input:focus, input:active {
+  border: 1px solid rgba(221, 221, 221, .4);
+}
+
+label {
+  margin: 0.25rem;
+  opacity: .8;
+}
+
+/* Global */
+.card {
+  width: min-content;
+  height: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(221, 221, 221, .2);
+  backdrop-filter: blur(1rem);
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.flex.column {
+  flex-direction: column;
+}
+.flex.align-center {
+  align-items: center;
+}
+.flex.justify-start {
+  justify-content: flex-start;
+}
+.flex.justify-end {
+  justify-content: flex-end;
+}
