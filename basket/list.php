@@ -76,7 +76,12 @@
     </div>
     <?php
         if (!empty($_SESSION['basket'])) {
-            echo "<form action='checkout.php' method='post'>";
+            echo "<form action='checkout.php' method='POST'>";
+            foreach ($_SESSION['basket'] as $bookDetails) {
+                echo "<input type='hidden' name='isbn[]' value='" . htmlspecialchars($bookDetails['ISBN']) . "'>";
+                echo "<input type='hidden' name='quantity[]' value='" . htmlspecialchars($bookDetails['quantity']) . "'>";
+                echo "<input type='hidden' name='price[]' value='" . htmlspecialchars($bookDetails['price']) . "'>";
+            }
             echo "<button type='submit' class='checkout-btn'>Proceed to Checkout</button>";
             echo "</form>";
         }

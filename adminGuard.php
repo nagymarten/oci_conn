@@ -13,6 +13,7 @@
     '/oci_conn/statistics/list',
     '/oci_conn/statistics/stats/best_customer.php',
     '/oci_conn/statistics/stats/best_genre.php',
+    '/oci_conn/basket/checkout'
  ];
 
   $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
