@@ -14,17 +14,19 @@
     <title>List of Book Supplies</title>
 </head>
 <body>
-    <h2>List of Book Supplies</h2>
     <div class="table-container">
+        <h2>List of Book Supplies</h2>
         <table>
             <?php
                 include '../connectToDb.php';
                 $conn = getDbConnection();
     
                 echo "<form method='get' action=\"" . htmlspecialchars($_SERVER['PHP_SELF']) . "\">
-                    <label for='search'>Search by Book ISBN:</label>
-                    <input type='text' id='search' name='search' placeholder='Enter book ISBN...'>
-                    <input type='submit' value='Search'>
+                    <div class=\"flex\">
+                        <label for='search'>Search by Book ISBN:</label>
+                        <input type='text' id='search' name='search' placeholder='Enter book ISBN...'>
+                        <input type='submit' value='Search'>
+                    </div>
                 </form>";
     
     
@@ -65,7 +67,7 @@
                         };
                         if ($isAdmin) {
                             echo "<td><button onclick=\"window.location.href='edit.php?SUPPLY_ID=" . urlencode($row['SUPPLY_ID']) . "'\"'>EDIT</button></td>";
-                            echo "<td><button onclick=\"window.location.href='delete.php?SUPPLY_ID=" . urlencode($row['SUPPLY_ID']) . "'\">DELETE</button></td>";
+                            echo "<td><button onclick=\"window.location.href='delete.php?SUPPLY_ID=" . urlencode($row['SUPPLY_ID']) . "'\" class=\"btn-delete\">DELETE</button></td>";
                         };
                         echo "</tr>";
                     }

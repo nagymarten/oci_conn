@@ -1,12 +1,6 @@
 <?php
     include '../../header.php'; // Assuming 'header.php' is in the same directory as this file
-
     include '../../connectToDb.php';
-
-
-    if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === 'Y') {
-        echo '<button onclick="window.location.pathname=\'oci_conn/books/create.php\'">Create New Book</button>';
-    }
 ?>
  <!DOCTYPE html>
 <html>

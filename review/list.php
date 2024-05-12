@@ -14,17 +14,19 @@
     <title>List of Reviews</title>
 </head>
 <body>
-    <h2>List of Reviews</h2>
     <div class="table-container">
+        <h2>List of Reviews</h2>
         <table>
             <?php
                 include '../connectToDb.php';
                 $conn = getDbConnection();
     
                 echo "<form method='get' action=\"". htmlspecialchars($_SERVER['PHP_SELF']). "\">
-                    <label for='search'>Search by Customer ID:</label>
-                    <input type='number' id='search' name='search' placeholder='Enter customer ID...'>
-                    <input type='submit' value='Search'>
+                    <div class=\"flex justify-start\">
+                        <label for='search'>Search by Customer ID:</label>
+                        <input type='number' id='search' name='search' placeholder='Enter customer ID...'>
+                        <input type='submit' value='Search'>
+                    </div>
                 </form>";
     
                 $isAdmin = isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === 'Y';
@@ -56,8 +58,8 @@
                             echo "<td>". ($item!== null? htmlspecialchars($item, ENT_QUOTES) : "&nbsp;"). "</td>";
                         };
                         if ($isAdmin) {
-                            echo "<td><button onclick=\"window.location.href='edit.php?REVIEW_ID=". urlencode($row['REVIEW_ID']). "'\"'>EDIT</button></td>";
-                            echo "<td><button onclick=\"window.location.href='delete.php?REVIEW_ID=". urlencode($row['REVIEW_ID']). "'\">DELETE</button></td>";
+                            echo "<td><button onclick=\"window.location.href='edit.php?REVIEW_ID=". urlencode($row['REVIEW_ID']). "'\"' class=\"primary\">EDIT</button></td>";
+                            echo "<td><button onclick=\"window.location.href='delete.php?REVIEW_ID=". urlencode($row['REVIEW_ID']). "'\" class=\"btn-delete\">DELETE</button></td>";
                         };
                         echo "</tr>";
                     }

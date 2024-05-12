@@ -1,9 +1,5 @@
 <?php
     include '../../header.php'; // Assuming 'header.php' is in the same directory as this file
-
-    if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === 'Y') {
-        echo '<button onclick="window.location.pathname=\'oci_conn/books/create.php\'">Create New Book</button>';
-    }
 ?>
 
 <!DOCTYPE html>
@@ -12,93 +8,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Best customers</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
 </head>
 <body>
+    <main>
+    <div class="table-container">
     <h2>Best genre</h2>
     <table>
         <?php
             include '../../connectToDb.php';
             $conn = getDbConnection();
 
-            echo "<form method='get' action=\"" . htmlspecialchars($_SERVER['PHP_SELF']) . "\">
-                <label for='search'>Search by Title:</label>
-                <input type='text' id='search' name='search' placeholder='Enter book title...'>
-                <input type='submit' value='Search'>
-            </form>";
+            $sql = 'SELECT k.GENRE, SUM(od.QUANTITY) AS TOTAL_SOLD
+                    FROM ORDER_DETAILS od
+                    JOIN KONYVEK k ON k.ISBN = od.ISBN
+                    GROUP BY k.GENRE
+                    ORDER BY TOTAL_SOLD DESC
+                    FETCH FIRST 1 ROWS ONLY';
+            $stid = oci_parse($conn, $sql);
 
-            $isAdmin = isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === 'Y';
+            // Execute the query
+            if (oci_execute($stid)) {
+                $row = oci_fetch_array($stid, OCI_ASSOC);
 
-            echo '<tr>
-                <th>ISBN</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Price</th>
-                <th>Genre</th>
-                <th>Book Binding</th>
-                <th>Page Count</th>
-                <th>Publisher</th>
-                <th>Page Size</th>
-                <th>Publish Date</th>
-                <th>Quantity</th>'; 
-
-            if ($isAdmin) {
-                echo '<th>Edit</th>';
-                echo '<th>Delete</th>';
+                if ($row) {
+                    echo "<div class=\"flex justify-start\">The most sold genre is: " . htmlspecialchars($row['GENRE']) . "<br></div>";
+                    echo "<div class=\"flex justify-start\">Total copies sold: " . htmlspecialchars($row['TOTAL_SOLD']) . "<br></div>";
+                } else {
+                    echo "No sales data found.";
+                }
             } else {
-                echo '<th>Add to Basket</th>';
+                $e = oci_error($stid);
+                echo "Error retrieving sales data: " . htmlentities($e['message'], ENT_QUOTES);
             }
-            echo '</tr>';
 
-            if (!$conn) {
-                echo "<tr><td colspan='12'>Unable to connect to the database.</td></tr>";
-            } else {
-                $query = "SELECT k.ISBN, k.TITLE, k.AUTHOR, k.PRICE, k.GENRE, k.BOOK_BINDING, k.PAGE_COUNT, k.PUBLISHER, k.PAGE_SIZE, k.PUBLISHER_DATE, b.QUANTITY
-                          FROM KONYVEK k
-                          JOIN BOOK_SUPPLY b ON k.ISBN = b.BOOK_ISBN
-                          WHERE b.QUANTITY > 0";
+            $sql2 = 'SELECT GENRE, COUNT(GENRE) AS COUNT FROM KONYVEK GROUP BY GENRE ORDER BY COUNT DESC';
+            $stid2 = oci_parse($conn, $sql2);
 
-                $stid = oci_parse($conn, $query);
-                oci_execute($stid);
+            // Execute the query
+            if (oci_execute($stid2)) {
+                echo "<table>";
+                echo "<thead><tr><th>Genre</th><th>Order Count</th></tr></thead>";
 
-                while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+                // Fetch each row and display it in the table
+                while ($row = oci_fetch_array($stid2, OCI_ASSOC)) {
                     echo "<tr>";
-                    foreach ($row as $item) {
-                        echo "<td>" . ($item !== null ? htmlspecialchars($item, ENT_QUOTES) : "&nbsp;") . "</td>";
-                    };
-                    if ($isAdmin) {
-                        echo "<td><button onclick=\"window.location.href='edit.php?ISBN=" . urlencode($row['ISBN']) . "'\">EDIT</button></td>";
-                        echo "<td><button onclick=\"window.location.href='delete.php?ISBN=" . urlencode($row['ISBN']) . "'\">DELETE</button></td>";
-                    } else {
-                       echo "
-                       <td>
-                            <form action='add_to_basket.php' method='post'>
-                                <input type='hidden' name='ISBN' value='" . htmlspecialchars($row['ISBN']) . "'>
-                                <button type='submit'>Add to Basket</button>
-                            </form>
-                        </td>";
-                    }
+                    echo "<td>" . htmlspecialchars($row['GENRE']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['COUNT']) . "</td>";
                     echo "</tr>";
                 }
-                oci_free_statement($stid);
-                oci_close($conn);
+
+                echo "</table>";
+            } else {
+                $e = oci_error($stid2);
+                echo "Error retrieving genre counts: " . htmlentities($e['message'], ENT_QUOTES);
             }
+
+            oci_free_statement($stid);
+            oci_free_statement($stid2);
+            oci_close($conn);
+
         ?>
     </table>
+    </div>
+    </main>
 </body>
 </html

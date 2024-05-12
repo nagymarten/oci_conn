@@ -1,5 +1,6 @@
 <?php
     include '../header.php'; // Assuming 'header.php' is in the same directory as this file
+    include '../connectToDb.php';
 
     if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === 'Y') {
         echo '<button onclick="window.location.pathname=\'oci_conn/books/create.php\'">Create New Book</button>';
@@ -14,33 +15,34 @@
     <title>List of Books</title>
 </head>
 <body>
-    <h2>List of Books</h2>
     <div class="table-container">
+        <h2>List of Books</h2>
         <table>
             <?php
-                include '../connectToDb.php';
                 $conn = getDbConnection();
 
                 echo "<form method='get' action=\"" . htmlspecialchars($_SERVER['PHP_SELF']) . "\">
-                    <label for='search'>Search by Title:</label>
-                    <input type='text' id='search' name='search' placeholder='Enter book title...'>
-                    <input type='submit' value='Search'>
+                    <div class=\"flex justify-start\">
+                        <label for='search'>Search by Title:</label>
+                        <input type='text' id='search' name='search' placeholder='Enter book title...'>
+                        <input type='submit' value='Search'>
+                    </div>
                 </form>";
 
                 $isAdmin = isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === 'Y';
 
-                echo '<tr>
-                    <th>ISBN</th>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Price</th>
-                    <th>Genre</th>
-                    <th>Book Binding</th>
-                    <th>Page Count</th>
-                    <th>Publisher</th>
-                    <th>Page Size</th>
-                    <th>Publish Date</th>
-                    <th>Quantity</th>'; 
+                echo '<thead><tr>
+                <th>ISBN</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Price</th>
+                <th>Genre</th>
+                <th>Book Binding</th>
+                <th>Page Count</th>
+                <th>Publisher</th>
+                <th>Page Size</th>
+                <th>Publish Date</th>
+                <th>Quantity</th></thead>'; 
 
                 if ($isAdmin) {
                     echo '<th>Edit</th>';
@@ -67,8 +69,8 @@
                             echo "<td>" . ($item !== null ? htmlspecialchars($item, ENT_QUOTES) : "&nbsp;") . "</td>";
                         };
                         if ($isAdmin) {
-                            echo "<td><button onclick=\"window.location.href='edit.php?ISBN=" . urlencode($row['ISBN']) . "'\">EDIT</button></td>";
-                            echo "<td><button onclick=\"window.location.href='delete.php?ISBN=" . urlencode($row['ISBN']) . "'\">DELETE</button></td>";
+                            echo "<td><button onclick=\"window.location.href='edit.php?ISBN=" . urlencode($row['ISBN']) . "'\" class=\"primary\">EDIT</button></td>";
+                            echo "<td><button onclick=\"window.location.href='delete.php?ISBN=" . urlencode($row['ISBN']) . "'\" class=\"btn-delete\">DELETE</button></td>";
                         } else {
                         echo "
                         <td>
