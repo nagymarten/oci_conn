@@ -13,7 +13,7 @@
 
     session_start();
 
-    function generateToken($nickname) {
+    function generate($nickname) {
         $token = base64_encode(random_bytes(32));
         return $token;
     }

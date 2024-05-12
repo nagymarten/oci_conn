@@ -1,7 +1,7 @@
 <?php
   session_start();
 
-  $publicPages = ['/oci_conn/books/list', '/oci_conn/stores/list', '/oci_conn/review/list', '/oci_conn/home', 'oci_conn/login', 'oci_conn/registration'];
+  $publicPages = ['/oci_conn/books/list', '/oci_conn/stores/list', '/oci_conn/review/list', '/oci_conn/home', 'oci_conn/login', 'oci_conn/registration', '/oci_conn/basket/basket'];
 
   $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
   $current_page = basename($_SERVER['PHP_SELF'], '.php');

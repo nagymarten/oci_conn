@@ -24,6 +24,9 @@
             echo "<button onclick=\"window.location.pathname = 'oci_conn/orders/list.php';\">Orders </button>";
             echo "<button onclick=\"window.location.pathname = 'oci_conn/regular_customer/list.php';\">Regular Customers </button>";
         }
+        else{
+            echo "<button onclick=\"window.location.pathname = 'oci_conn/basket/basket.php';\">Basket</button>";
+        }
     ?>
    
     <form method="post">

@@ -82,7 +82,7 @@
                         echo "<td><button onclick=\"window.location.href='edit.php?ISBN=" . urlencode($row['ISBN']) . "'\"'>EDIT</button></td>";
                         echo "<td><button onclick=\"window.location.href='delete.php?ISBN=" . urlencode($row['ISBN']) . "'\">DELETE</button></td>";
                     } else {
-                        echo "<td><button onclick=\"window.location.href='add_to_basket.php?ISBN=" . urlencode($row['ISBN']) . "'\">Add to Basket</button></td>"; // Add button for "Add to Basket"
+                        echo "<td><button onclick=\"window.location.href='add_to_basket.php?ISBN=" . urlencode($row['ISBN']) . "'\">DELETE</button></td>"; 
                     }
                     echo "</tr>";
                 }
@@ -91,5 +91,9 @@
             }
         ?>
     </table>
+
+    <button onclick="window.location.href='checkout.php'">Checkout</button>
+
+
 </body>
 </html>
