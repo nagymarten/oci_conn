@@ -23,7 +23,7 @@
             echo "<button onclick=\"window.location.pathname = 'oci_conn/book_supply/list.php';\">Book supply </button>";
             echo "<button onclick=\"window.location.pathname = 'oci_conn/orders/list.php';\">Orders </button>";
             echo "<button onclick=\"window.location.pathname = 'oci_conn/regular_customer/list.php';\">Regular Customers </button>";
-            echo "<button onclick=\"window.location.pathname = 'oci_conn/statistic/list.php';\">Statistic </button>";
+            echo "<button onclick=\"window.location.pathname = 'oci_conn/statistics/list.php';\">Statistic </button>";
         }
         else{
             echo "<button onclick=\"window.location.pathname = 'oci_conn/basket/list.php';\">Basket</button>";

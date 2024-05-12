@@ -36,7 +36,7 @@
 
         if ( $isAdmin ) {
             echo "<button onclick=\"window.location.pathname = 'oci_conn/statistics/stats/best_genre.php';\">best_genre</button>";
-            echo "<button onclick=\"window.location.pathname = 'oci_conn/statistics/stats/best_customer.php';\">best_genre</button>";
+            echo "<button onclick=\"window.location.pathname = 'oci_conn/statistics/stats/serch_customer_orders.php';\">Search Customer Orders</button>";
         }
     ?>
 </body>

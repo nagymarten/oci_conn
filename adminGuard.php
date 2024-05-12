@@ -1,7 +1,19 @@
 <?php
   session_start();
 
-  $publicPages = ['/oci_conn/books/list', '/oci_conn/stores/list', '/oci_conn/review/list', '/oci_conn/home', 'oci_conn/login', 'oci_conn/registration', '/oci_conn/basket/list'];
+  $publicPages = [
+    '/oci_conn/books/list',
+    '/oci_conn/stores/list',
+    '/oci_conn/review/list',
+    '/oci_conn/home',
+    'oci_conn/login',
+    'oci_conn/registration',
+    '/oci_conn/basket/list',
+    '/oci_conn/statistics',
+    '/oci_conn/statistics/list',
+    '/oci_conn/statistics/stats/best_customer.php',
+    '/oci_conn/statistics/stats/best_genre.php',
+ ];
 
   $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
   $current_page = basename($_SERVER['PHP_SELF'], '.php');

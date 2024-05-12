@@ -48,10 +48,7 @@
             echo '<tr>
                 <th>ORDER_ID</th>
                 <th>CUSTOMER_ID</th>
-                <th>BOOK_ISBN</th>
                 <th>ORDER_DATE</th>
-                <th>BOOKS</th>
-                <th>Price</th>
             ';
 
             if ($isAdmin) {

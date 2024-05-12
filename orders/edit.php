@@ -29,7 +29,7 @@
         }
 
         // Fetch the order data from the database
-        $sql = "SELECT ORDER_ID, CUSTOMER_ID, BOOK_ISBN, ORDER_DATE, BOOKS, COST FROM ORDERS WHERE ORDER_ID = :orderId";
+        $sql = "SELECT ORDER_ID, CUSTOMER_ID, ORDER_DATE  FROM ORDERS WHERE ORDER_ID = :orderId";
         $stmt = oci_parse($conn, $sql);
         oci_bind_by_name($stmt, ':orderId', $orderId);
         oci_execute($stmt);
@@ -45,17 +45,10 @@
                 <label for="customer_id">Customer ID:</label>
                 <input type="number" id="customer_id" name="customer_id" value="<?php echo htmlspecialchars($order['CUSTOMER_ID']); ?>" required>
 
-                <label for="book_isbn">Book ISBN:</label>
-                <input type="text" id="book_isbn" name="book_isbn" value="<?php echo htmlspecialchars($order['BOOK_ISBN']); ?>" required>
 
                 <label for="order_date">Order Date:</label>
                 <input type="date" id="order_date" name="order_date" value="<?php echo date('Y-m-d', strtotime($order['ORDER_DATE'])); ?>" required>
 
-                <label for="books">Books:</label>
-                <input type="number" id="books" name="books" value="<?php echo htmlspecialchars($order['BOOKS']); ?>" required>
-
-                <label for="cost">Cost:</label>
-                <input type="number" id="cost" name="cost" value="<?php echo htmlspecialchars($order['COST']); ?>" step="0.01" required>
 
                 <button type="submit">Update Order</button>
             </form>
