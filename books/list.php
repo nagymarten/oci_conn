@@ -2,7 +2,7 @@
     include '../header.php'; // Assuming 'header.php' is in the same directory as this file
 
     if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === 'Y') {
-       echo '<button onclick="window.location.pathname=\'oci_conn/books/create.php\'">Create New Book</button>';
+        echo '<button onclick="window.location.pathname=\'oci_conn/books/create.php\'">Create New Book</button>';
     }
 ?>
 
@@ -55,7 +55,7 @@
                 <th>Publisher</th>
                 <th>Page Size</th>
                 <th>Publish Date</th>
-            ';
+                <th>Quantity</th>'; 
 
             if ($isAdmin) {
                 echo '<th>Edit</th>';
@@ -66,9 +66,13 @@
             echo '</tr>';
 
             if (!$conn) {
-                echo "<tr><td colspan='10'>Unable to connect to the database.</td></tr>";
+                echo "<tr><td colspan='12'>Unable to connect to the database.</td></tr>";
             } else {
-                $query = 'SELECT ISBN, TITLE, AUTHOR, PRICE, GENRE, BOOK_BINDING, PAGE_COUNT, PUBLISHER, PAGE_SIZE, PUBLISHER_DATE FROM KONYVEK';
+                $query = "SELECT k.ISBN, k.TITLE, k.AUTHOR, k.PRICE, k.GENRE, k.BOOK_BINDING, k.PAGE_COUNT, k.PUBLISHER, k.PAGE_SIZE, k.PUBLISHER_DATE, b.QUANTITY
+                          FROM KONYVEK k
+                          JOIN BOOK_SUPPLY b ON k.ISBN = b.BOOK_ISBN
+                          WHERE b.QUANTITY > 0";
+
                 $stid = oci_parse($conn, $query);
                 oci_execute($stid);
 
@@ -78,7 +82,7 @@
                         echo "<td>" . ($item !== null ? htmlspecialchars($item, ENT_QUOTES) : "&nbsp;") . "</td>";
                     };
                     if ($isAdmin) {
-                        echo "<td><button onclick=\"window.location.href='edit.php?ISBN=" . urlencode($row['ISBN']) . "'\"'>EDIT</button></td>";
+                        echo "<td><button onclick=\"window.location.href='edit.php?ISBN=" . urlencode($row['ISBN']) . "'\">EDIT</button></td>";
                         echo "<td><button onclick=\"window.location.href='delete.php?ISBN=" . urlencode($row['ISBN']) . "'\">DELETE</button></td>";
                     } else {
                        echo "
@@ -97,4 +101,4 @@
         ?>
     </table>
 </body>
-</html>
+</html
