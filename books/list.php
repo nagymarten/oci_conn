@@ -42,7 +42,7 @@
                 <th>Publisher</th>
                 <th>Page Size</th>
                 <th>Publish Date</th>
-                <th>Quantity</th></thead>'; 
+                <th>Quantity</th>'; 
 
                 if ($isAdmin) {
                     echo '<th>Edit</th>';
@@ -50,7 +50,7 @@
                 } else {
                     echo '<th>Add to Basket</th>';
                 }
-                echo '</tr>';
+                echo '</tr></thead>';
 
                 if (!$conn) {
                     echo "<tr><td colspan='12'>Unable to connect to the database.</td></tr>";

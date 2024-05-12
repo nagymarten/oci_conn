@@ -1,17 +1,23 @@
 <?php
-    include '../header.php'; // Assuming 'header.php' is in the same directory as this file
+    include '../header.php';
 
-    //print_r($_SESSION); // Debug: Print all session data
-
-    // Handle delete request
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_isbn'])) {
-        // Loop through the basket and remove the item that matches the ISBN
-        foreach ($_SESSION['basket'] as $key => $bookDetails) {
-            if ($bookDetails['ISBN'] === $_POST['delete_isbn']) {
-                unset($_SESSION['basket'][$key]);
-                // Reindex the array to avoid skipped indices
-                $_SESSION['basket'] = array_values($_SESSION['basket']);
-                break;
+    // Handling quantity changes
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['change_qty'], $_POST['isbn'], $_POST['new_qty'])) {
+            foreach ($_SESSION['basket'] as $key => &$bookDetails) {
+                if ($bookDetails['ISBN'] === $_POST['isbn']) {
+                    $bookDetails['quantity'] = max(1, $_POST['new_qty']); // Ensure quantity is at least 1
+                    break;
+                }
+            }
+        }
+        elseif (isset($_POST['delete_isbn'])) {
+            foreach ($_SESSION['basket'] as $key => $bookDetails) {
+                if ($bookDetails['ISBN'] === $_POST['delete_isbn']) {
+                    unset($_SESSION['basket'][$key]);
+                    $_SESSION['basket'] = array_values($_SESSION['basket']);
+                    break;
+                }
             }
         }
     }
@@ -32,30 +38,38 @@
                 <th>Title</th>
                 <th>Author</th>
                 <th>Price</th>
+                <th>Quantity</th>
                 <th>Action</th>
             </tr>
             <?php
-                $totalPrice = 0; // Initialize total price
-                if(isset($_SESSION['basket']) && !empty($_SESSION['basket'])) {
+                $totalPrice = 0;
+                if (isset($_SESSION['basket']) && !empty($_SESSION['basket'])) {
                     foreach ($_SESSION['basket'] as $bookDetails) {
+                        $linePrice = $bookDetails['price'] * $bookDetails['quantity'];
                         echo "<tr>";
                         echo "<td>" . htmlspecialchars($bookDetails['ISBN']) . "</td>";
                         echo "<td>" . htmlspecialchars($bookDetails['title']) . "</td>";
                         echo "<td>" . htmlspecialchars($bookDetails['author']) . "</td>";
-                        echo "<td>$" . htmlspecialchars($bookDetails['price']) . "</td>";
-                        // Add Delete button
+                        echo "<td>" . htmlspecialchars($bookDetails['price']) . " FT</td>";
                         echo "<td>
-                                <form action='delete_from_basket.php' method='post'>
+                                <form action='' method='post'>
+                                    <input type='hidden' name='isbn' value='" . htmlspecialchars($bookDetails['ISBN']) . "'>
+                                    <input type='number' name='new_qty' value='" . $bookDetails['quantity'] . "' min='1' style='width: 50px;'>
+                                    <button type='submit' name='change_qty'>Update</button>
+                                </form>
+                              </td>";
+                        echo "<td>
+                                <form action='' method='post'>
                                     <input type='hidden' name='delete_isbn' value='" . htmlspecialchars($bookDetails['ISBN']) . "'>
                                     <button type='submit' class='btn-delete'>Delete</button>
                                 </form>
                               </td>";
-                        $totalPrice += $bookDetails['price'];
                         echo "</tr>";
+                        $totalPrice += $linePrice;
                     }
-                    echo "<tr><td colspan='3' style='text-align: right; font-weight: bold;'>Total:</td><td>$" . number_format($totalPrice, 2) . "</td><td></td></tr>";
+                    echo "<tr><td colspan='4' style='text-align: right; font-weight: bold;'>Total:</td><td>" . number_format($totalPrice, 2) . " FT</td><td></td></tr>";
                 } else {
-                    echo "<tr><td colspan='5'>Your basket is empty.</td></tr>";
+                    echo "<tr><td colspan='6'>Your basket is empty.</td></tr>";
                 }
             ?>
         </table>

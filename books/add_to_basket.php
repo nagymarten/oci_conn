@@ -4,22 +4,31 @@ session_start(); // Start the session if it's not already started in header.php
 
 // Check if ISBN is provided in the request
 if(isset($_POST['ISBN']) && !empty($_POST['ISBN'])) { 
-    // Extract book details from POST
     $ISBN = $_POST['ISBN'];
-    $title = $_POST['title'];
-    $author = $_POST['author'];
-    $price = $_POST['price'];
+    $quantity = isset($_POST['quantity']) ? intval($_POST['quantity']) : 1; // Default quantity to 1 if not specified
 
     echo '<script> console.log("ISBN: ' . $ISBN . '");</script>';
 
-    // Simulate fetching book details
-    $bookDetails = getBookDetailsByISBN($ISBN, $title, $author, $price);
+    // Fetch or simulate fetching book details
+    $bookDetails = getBookDetailsByISBN($ISBN);
     echo "<script>console.log(" . json_encode($bookDetails) . ");</script>";
 
     // Check if the book details are retrieved successfully
     if($bookDetails !== null) {
-        // Add the book details to the basket session variable
-        $_SESSION['basket'][] = $bookDetails;
+        // Initialize or update the book in the basket session variable
+        $found = false;
+        foreach ($_SESSION['basket'] as &$item) {
+            if ($item['ISBN'] == $ISBN) {
+                $item['quantity'] += $quantity; // Update quantity if the book is already in the basket
+                $found = true;
+                break;
+            }
+        }
+        if (!$found) {
+            $bookDetails['quantity'] = $quantity; // Set quantity for new addition
+            $_SESSION['basket'][] = $bookDetails;
+        }
+
         // Redirect back to the book listing page with a success message
         header('Location: list.php?added_to_basket');
         exit();
@@ -34,7 +43,7 @@ if(isset($_POST['ISBN']) && !empty($_POST['ISBN'])) {
     exit();
 }
 
-// Function to simulate fetching book details based on ISBN// Function to fetch book details based on ISBN
+// Function to simulate fetching book details based on ISBN
 function getBookDetailsByISBN($ISBN) {
     include '../connectToDb.php'; // Ensure database connection is available
     $conn = getDbConnection();
