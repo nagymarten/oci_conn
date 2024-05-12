@@ -63,25 +63,29 @@
     }
    ?>
 
-    <h2>Registration Form</h2>
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" required><br>
+    <main>
+        <form class="card" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+            <h2>Registration Form</h2>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br>
 
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br>
 
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br>
 
-        <label for="confirm_password">Confirm Password:</label><br>
-        <input type="password" id="confirm_password" name="confirm_password" required><br>
+            <label for="confirm_password">Confirm Password:</label>
+            <input type="password" id="confirm_password" name="confirm_password" required><br>
 
-        <label for="address">Address:</label><br>
-        <input type="text" id="address" name="address" required><br>
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" required><br>
 
-        <input type="submit" value="Register">
-    </form>
+            <div class="flex justify-end">
+                <button class="primary" type="submit">Sign me up</button>
+            </div>
+        </form>
+    </main>
 </body>
 
 </html>

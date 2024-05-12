@@ -60,15 +60,19 @@
     }
   ?>
 
-    <h2>Login Form</h2>
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-        <label for="nickname">Nickname:</label><br>
-        <input type="text" id="nickname" name="nickname" required><br>
+    <main>
+        <form class="card" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+            <h1>Login Form</h1>
+            <label for="nickname">Nickname:</label>
+            <input type="text" id="nickname" name="nickname" required><br>
 
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br>
 
-        <input type="submit" value="Login">
-    </form>
+            <div class="flex justify-end">
+                <button class="primary" type="submit">Login</button>
+            </div>
+        </form>
+    </main>
 </body>
 </html>
