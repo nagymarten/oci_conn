@@ -11,7 +11,7 @@
         <h2>The book store</h2>
         <div class="header-actions">
             <button class="primary" onclick="window.location.pathname = 'oci_conn/login.php';">Sign in</button>
-            <button onclick="window.location.pathname = 'oci_conn/registration.php';">Sign up</button>    
+            <button onclick="window.location.pathname = 'oci_conn/registration.php';">Sign up</button>
         </div>
     </header>
 </body>
